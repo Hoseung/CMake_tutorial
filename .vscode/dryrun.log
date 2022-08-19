@@ -1,0 +1,9 @@
+make -f /home/hoseung/Work/FHE/CMake/lib/makefile --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/hoseung/Work/FHE/CMake'
+make: Leaving directory '/home/hoseung/Work/FHE/CMake'
+ 
+make: /home/hoseung/Work/FHE/CMake/lib/makefile: No such file or directory
+make: *** No rule to make target '/home/hoseung/Work/FHE/CMake/lib/makefile'.
+make: Failed to remake makefile '/home/hoseung/Work/FHE/CMake/lib/makefile'.
+make: *** No targets specified and no makefile found.  Stop.
+
