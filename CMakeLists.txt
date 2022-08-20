@@ -33,9 +33,36 @@ target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS})
 target_include_directories(Tutorial PUBLIC
                    "${PROJECT_BINARY_DIR}") 
 
-# <NEW>
 # install executable under /usr/local/bin
 install(TARGETS Tutorial DESTINATION bin)
 # put auto-generated TutorialConfig.h under /usr/local/include
 install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"
         DESTINATION include)
+
+
+# <NEW> 
+# TESTING
+enable_testing()
+# add a rule for test (and perform the test)
+add_test(NAME Runs COMMAND Tutorial 25)
+
+add_test(NAME Usage COMMAND Tutorial)
+# "manually" set the *answer* to check the output against
+set_tests_properties(Usage 
+    PROPERTIES PASS_REGULAR_EXPRESSION "Usage:.*number")
+
+# a convenience function to run test
+function(do_test target arg result) 
+    add_test(NAME Comp${arg} COMMAND ${target} ${arg})
+    set_tests_properties(Comp${arg}
+        PROPERTIES PASS_REGULAR_EXPRESSION ${result})
+endfunction()
+
+# scrypt to run tests
+do_test(Tutorial 4 "4 is 2")
+do_test(Tutorial 9 "9 is 3")
+do_test(Tutorial 5 "5 is 2.236")
+do_test(Tutorial 7 "7 is 2.645")
+do_test(Tutorial 25 "25 is 5")
+do_test(Tutorial -25 "-25 is (-nan|nan|0)")
+do_test(Tutorial 0.0001 "0.0001 is 0.01")
