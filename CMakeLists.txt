@@ -6,10 +6,14 @@ project(Tutorial VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Add definition for math library
-add_library(math math.cpp)
-
 # <NEW>
+# library under a subdirectory
+# add_subdirectory(source_dir)
+#
+# expects a "CMake-valid" library
+# with its own CMakeLists.txt file
+add_subdirectory(mylib)
+
 # Add configured header file
 # configure_file(input output)
 # CMake will process the {input} into {output}
@@ -22,7 +26,7 @@ add_executable(Tutorial tutorial.cpp)
 # Let project "Tutorial" link to the library 'math'
 target_link_libraries(Tutorial math)
 
-# <NEW>
 # add configured header path
 target_include_directories(Tutorial PUBLIC
-                   "${PROJECT_BINARY_DIR}")
+                   "${PROJECT_BINARY_DIR}"
+                   "${PROJECT_SOURCE_DIR}/mylib") # <NEW>
