@@ -8,14 +8,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
 
-# <NEW>
 # Optional library
 option(USE_MYLIB "Use my library" ON)
 
 if(USE_MYLIB)
     add_subdirectory(mylib)
     list(APPEND EXTRA_LIBS math)
-    list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/mylib")
+    # Extra include dir is no longer needed.
+    # The requirement is imposed by the rule in mylib/CMakeLists.txt
 endif()
 
 message(STATUS "EXTRA_INCLUDES: ${EXTRA_INCLUDES}")
@@ -30,9 +30,8 @@ configure_file(TutorialConfig.h.in TutorialConfig.h)
 add_executable(Tutorial tutorial.cpp)
 
 # Let project "Tutorial" link to the library 'math'
-target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS}) #<NEW>
+target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS})
 
 # add configured header path
 target_include_directories(Tutorial PUBLIC
-                   "${PROJECT_BINARY_DIR}"
-                   ${EXTRA_INCLUDES}) #<NEW>
+                   "${PROJECT_BINARY_DIR}") 
