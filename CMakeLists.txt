@@ -7,7 +7,6 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
-
 # Optional library
 option(USE_MYLIB "Use my library" ON)
 
@@ -17,8 +16,6 @@ if(USE_MYLIB)
     # Extra include dir is no longer needed.
     # The requirement is imposed by the rule in mylib/CMakeLists.txt
 endif()
-
-message(STATUS "EXTRA_INCLUDES: ${EXTRA_INCLUDES}")
 
 # Add configured header file
 # configure_file(input output)
@@ -35,3 +32,10 @@ target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS})
 # add configured header path
 target_include_directories(Tutorial PUBLIC
                    "${PROJECT_BINARY_DIR}") 
+
+# <NEW>
+# install executable under /usr/local/bin
+install(TARGETS Tutorial DESTINATION bin)
+# put auto-generated TutorialConfig.h under /usr/local/include
+install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"
+        DESTINATION include)
