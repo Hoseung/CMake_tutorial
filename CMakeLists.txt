@@ -6,13 +6,19 @@ project(Tutorial VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+
+
 # <NEW>
-# library under a subdirectory
-# add_subdirectory(source_dir)
-#
-# expects a "CMake-valid" library
-# with its own CMakeLists.txt file
-add_subdirectory(mylib)
+# Optional library
+option(USE_MYLIB "Use my library" ON)
+
+if(USE_MYLIB)
+    add_subdirectory(mylib)
+    list(APPEND EXTRA_LIBS math)
+    list(APPEND EXTRA_INCLUDES "${PROJECT_SOURCE_DIR}/mylib")
+endif()
+
+message(STATUS "EXTRA_INCLUDES: ${EXTRA_INCLUDES}")
 
 # Add configured header file
 # configure_file(input output)
@@ -24,9 +30,9 @@ configure_file(TutorialConfig.h.in TutorialConfig.h)
 add_executable(Tutorial tutorial.cpp)
 
 # Let project "Tutorial" link to the library 'math'
-target_link_libraries(Tutorial math)
+target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS}) #<NEW>
 
 # add configured header path
 target_include_directories(Tutorial PUBLIC
                    "${PROJECT_BINARY_DIR}"
-                   "${PROJECT_SOURCE_DIR}/mylib") # <NEW>
+                   ${EXTRA_INCLUDES}) #<NEW>

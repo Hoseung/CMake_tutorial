@@ -16,6 +16,7 @@ int main(int argc, char **argv) {
     return 1;
     }
 
+#ifdef USE_MYLIB
     result = math::add(1, 2);
     cout << "add 1 + 2 : " << result << endl;
 
@@ -33,4 +34,8 @@ int main(int argc, char **argv) {
 
     result = math::mul(4, 2);
     cout << "mul 4 * 2 : " << result << endl;
+#else
+    cout << "No math library!" << endl;
+#endif
+    return 0;
 }
