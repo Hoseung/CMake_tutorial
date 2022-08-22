@@ -12,7 +12,7 @@ option(USE_MYLIB "Use my library" ON)
 
 if(USE_MYLIB)
     add_subdirectory(mylib)
-    list(APPEND EXTRA_LIBS math)
+    list(APPEND EXTRA_LIBS MathFunctions)
     # Extra include dir is no longer needed.
     # The requirement is imposed by the rule in mylib/CMakeLists.txt
 endif()
@@ -26,7 +26,7 @@ configure_file(TutorialConfig.h.in TutorialConfig.h)
 
 add_executable(Tutorial tutorial.cpp)
 
-# Let project "Tutorial" link to the library 'math'
+# Let project "Tutorial" link to the library 'MathFunctions'
 target_link_libraries(Tutorial PUBLIC ${EXTRA_LIBS})
 
 # add configured header path
@@ -40,7 +40,6 @@ install(FILES "${PROJECT_BINARY_DIR}/TutorialConfig.h"
         DESTINATION include)
 
 
-# <NEW> 
 # TESTING
 enable_testing()
 # add a rule for test (and perform the test)
